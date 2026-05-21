@@ -1,41 +1,115 @@
-Shatranj.com
-![Shatranj hero](public\images\Screenshot 2026-05-22 003640.png)
+#  Shatranj.com – Real-Time Multiplayer Chess Game
 
-Production-oriented real-time chess platform (Shatranj.com) with server-authoritative game logic, matchmaking, AI (Stockfish), and a premium dark UI.
+A real-time multiplayer chess application built using JavaScript, Node.js, Socket.io, and Chess.js. Players can join and play live chess matches with move synchronization, legal move validation, drag-and-drop functionality, and dynamic board rendering.
 
-Stack
-Server: Node.js, Express, Socket.io, Chess.js
-Client: Vanilla ES modules, Chess.js (CDN), Stockfish (Web Worker)
-UI: Custom CSS + optional Tailwind build
-Quick Start
+---
+
+##  Features
+
+- Real-time multiplayer gameplay
+- Live move synchronization using Socket.io
+- Legal move validation with Chess.js
+- Drag-and-drop chess pieces
+- Automatic board flip for black player
+- Clean and responsive UI
+- Fast gameplay updates
+
+---
+
+## Tech Stack
+
+### Frontend
+- HTML
+- CSS / Tailwind CSS
+- JavaScript
+
+### Backend
+- Node.js
+- Express.js
+- Socket.io
+
+### Libraries
+- Chess.js
+
+---
+
+## 📂 Project Structure
+
+```bash
+public/      # Static frontend assets
+server/      # Backend/socket logic
+views/       # UI templates
+app.js       # Main server entry point
+```
+
+---
+
+## ⚙️ Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Shatranj.com-The-Game.git
+```
+
+Move into the project directory:
+
+```bash
+cd Shatranj.com-The-Game
+```
+
+Install dependencies:
+
+```bash
 npm install
-npm start
-Landing: http://localhost:3000
-Play (new): http://localhost:3000/game?mode=online
-AI game: http://localhost:3000/game?mode=ai&difficulty=5&color=w
-Legacy board: http://localhost:3000/play
-Health: http://localhost:3000/health
-Environment
-Copy .env.example to .env and set SESSION_SECRET for production.
+```
 
-Scripts
-Command	Description
-npm start	Start server
-npm run build:css	Build Tailwind (requires devDependencies)
-npm run dev:all	Server + CSS watch (with concurrently)
-Architecture
-server/game/     — GameInstance, timers, validation (no sockets)
-server/room/     — Room lifecycle
-server/socket/   — Thin event handlers
-public/js/core/  — Socket singleton, event bus, state
-public/js/game/  — Board, drag-drop, sounds, timers
-Socket Events
-Client → Server: room:create, room:join, matchmaking:join, game:move, game:resign, etc.
+Run the server:
 
-Server → Client: game:start, game:move, game:over, game:timer:update, etc.
+```bash
+node app.js
+```
 
-Deploy (Render)
-Build: npm run build:css (optional)
-Start: node server/index.js
-Set NODE_ENV=production, PORT, CLIENT_URL, CORS_ORIGINS
-Enable WebSocket support
+---
+
+## 🌐 Running the Project
+
+Open your browser and visit:
+
+```bash
+http://localhost:3000
+```
+
+---
+
+
+## What I Learned
+
+- Real-time communication using Socket.io
+- Multiplayer game state synchronization
+- DOM manipulation and rendering
+- Chess logic integration with Chess.js
+- Backend and frontend integration
+
+---
+
+## Future Improvements
+
+- Player authentication
+- Matchmaking system
+- Chess timers
+- Game history
+- Spectator mode
+- Mobile responsiveness improvements
+
+---
+
+## 👨‍💻 Author
+
+Manas Kapoor
+
+---
+
+## ⭐ Support
+
+If you like this project, give it a star on GitHub.
