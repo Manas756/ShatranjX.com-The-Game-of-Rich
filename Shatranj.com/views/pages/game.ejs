@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="stylesheet" href="/css/custom.css" />
+</head>
+<body class="game-page">
+  <%- include('../partials/nav') %>
+  <div id="room-code-banner" class="room-code-banner hidden">
+    <span class="room-code-label">Room code</span>
+    <strong id="room-code-value" class="room-code-value">------</strong>
+    <button type="button" id="btn-copy-room" class="btn-ghost btn-copy">Copy</button>
+    <span id="room-waiting-hint" class="room-waiting-hint">Share this code so a friend can join</span>
+  </div>
+  <main class="game-layout">
+    <aside class="game-sidebar left">
+      <div class="player-card opponent">
+        <span id="opponent-name">Waiting...</span>
+        <span id="timer-black" class="timer-display">5:00</span>
+      </div>
+      <div id="captured-black" class="captured-bar"></div>
+    </aside>
+    <section class="board-area">
+      <div id="board" class="chessboard-grid"></div>
+      <p id="ai-thinking" class="ai-thinking hidden">Stockfish is thinking...</p>
+    </section>
+    <aside class="game-sidebar right">
+      <div class="player-card self">
+        <span id="timer-white" class="timer-display timer-active">5:00</span>
+        <span>You</span>
+      </div>
+      <div id="captured-white" class="captured-bar"></div>
+      <div id="move-history" class="move-history-panel"></div>
+      <div class="game-actions">
+        <button type="button" id="btn-resign" class="btn-danger">Resign</button>
+        <button type="button" id="btn-draw" class="btn-ghost">Offer Draw</button>
+      </div>
+      <div id="draw-offer-panel" class="draw-panel hidden">
+        <p>Draw offered</p>
+        <button type="button" id="btn-accept-draw">Accept</button>
+        <button type="button" id="btn-decline-draw">Decline</button>
+      </div>
+      <div id="rematch-panel" class="hidden">
+        <button type="button" id="btn-rematch">Rematch</button>
+      </div>
+      <p id="material-advantage" class="material-adv"></p>
+    </aside>
+  </main>
+  <div id="promotion-modal" class="promotion-overlay">
+    <div class="promotion-glass">
+      <p>Promote pawn</p>
+      <p class="promotion-timer">5</p>
+      <div class="promotion-grid"></div>
+    </div>
+  </div>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/js/pages/game.js"></script>
+</body>
+</html>
