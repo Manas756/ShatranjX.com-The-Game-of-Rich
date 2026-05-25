@@ -1,7 +1,7 @@
-# Shatranj.com
+# ShatranjX.com
 
 
-Production-oriented real-time chess platform (Shatranj.com) with server-authoritative game logic, matchmaking, AI (Stockfish), and a premium dark UI.
+Production-oriented real-time chess platform (ShatranjX.com) with server-authoritative game logic, matchmaking, AI (Stockfish), and a premium dark UI.
 
 ## Stack
 
