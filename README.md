@@ -1,6 +1,5 @@
 # Shatranj.com
 
-![Shatranj hero](public\images\Screenshot 2026-05-22 003640.png)
 
 Production-oriented real-time chess platform (Shatranj.com) with server-authoritative game logic, matchmaking, AI (Stockfish), and a premium dark UI.
 
