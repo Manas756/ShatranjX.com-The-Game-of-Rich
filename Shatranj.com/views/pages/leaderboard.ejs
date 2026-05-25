@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="stylesheet" href="/css/custom.css" />
+</head>
+<body class="landing-page">
+  <%- include('../partials/nav') %>
+  <section class="section">
+    <h1 class="section-title">Global Leaderboard</h1>
+    <table class="glass-card leaderboard-table" style="width:100%;max-width:700px;margin:0 auto;border-collapse:collapse;">
+      <thead><tr><th>#</th><th>Player</th><th>ELO</th><th>Win Rate</th></tr></thead>
+      <tbody id="leaderboard-body"></tbody>
+    </table>
+  </section>
+  <%- include('../partials/footer') %>
+  <script type="module" src="/js/pages/leaderboard.js"></script>
+</body>
+</html>

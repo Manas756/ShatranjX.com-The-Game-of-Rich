@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="stylesheet" href="/css/custom.css" />
+</head>
+<body class="landing-page">
+  <%- include('../partials/nav') %>
+  <section class="hero">
+    <div class="hero-pieces" aria-hidden="true">
+      <span class="float-piece p1">&#9812;</span>
+      <span class="float-piece p2">&#9813;</span>
+      <span class="float-piece p3">&#9814;</span>
+      <span class="float-piece p4">&#9816;</span>
+      <span class="float-piece p5">&#9815;</span>
+    </div>
+    <div class="hero-content reveal">
+      <h1 class="hero-title">Shatranj.<br><em>Master the Game.</em></h1>
+      <p class="hero-sub">Real-time multiplayer &bull; AI opponents &bull; Global leaderboards</p>
+      <div class="hero-cta">
+        <button type="button" id="btn-play-online" class="btn-primary">Play Online</button>
+        <button type="button" id="btn-play-ai" class="btn-secondary">Play vs AI</button>
+      </div>
+      <div class="hero-cta-row">
+        <button type="button" id="btn-create-room" class="btn-ghost">Create Private Room</button>
+        <button type="button" id="btn-join-room" class="btn-ghost">Join with Code</button>
+      </div>
+      <input type="text" id="username-input" class="username-input" placeholder="Your username" maxlength="20" />
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
+  <section class="stats-bar reveal"><p id="live-stats">Connecting...</p></section>
+  <section class="section">
+    <h2 class="section-title reveal">Choose Your Pace</h2>
+    <div class="mode-grid">
+      <article class="glass-card reveal" data-match-tc="bullet1"><h3>Bullet</h3><p>1 min</p></article>
+      <article class="glass-card reveal" data-match-tc="blitz5"><h3>Blitz</h3><p>5 min</p></article>
+      <article class="glass-card reveal" data-match-tc="rapid10"><h3>Rapid</h3><p>10 min</p></article>
+      <article class="glass-card reveal" data-match-tc="classical"><h3>Classical</h3><p>30 min</p></article>
+    </div>
+  </section>
+  <section class="section features-grid reveal">
+    <article class="glass-card feature"><h3>Real-time Multiplayer</h3><p>Server-authoritative moves</p></article>
+    <article class="glass-card feature"><h3>AI Opponents</h3><p>Stockfish in-browser</p></article>
+    <article class="glass-card feature"><h3>Match History</h3><p>PGN export and review</p></article>
+  </section>
+  <div id="create-room-modal" class="modal-overlay hidden"></div>
+  <div id="join-room-modal" class="modal-overlay hidden"></div>
+  <div id="toast-container" class="toast-container"></div>
+  <%- include('../partials/footer') %>
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="/js/pages/landing.js"></script>
+</body>
+</html>
