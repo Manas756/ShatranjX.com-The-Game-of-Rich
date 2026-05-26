@@ -12,8 +12,7 @@ Production-oriented real-time chess platform (ShatranjX.com) with server-authori
 ## Quick Start
 
 ```bash
-npm install
-npm start
+npm run dev
 ```
 
 - Landing: http://localhost:3000
