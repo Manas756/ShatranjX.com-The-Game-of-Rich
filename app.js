@@ -3,7 +3,7 @@ const socket=require('socket.io');
 const http=require('http');
 const {Chess}=require('chess.js');
 const path = require('path');
-const { Socket } = require('dgram');
+
 
 const app = express();
 const server = http.createServer(app);
@@ -69,6 +69,8 @@ io.on("connection",function(usocket){
 
 });
 
-server.listen(3000, () => {
-    console.log("Server is running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+    console.log("Server is running on port " + PORT);
 });
