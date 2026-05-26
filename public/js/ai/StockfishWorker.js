@@ -1,79 +1,71 @@
-const DIFFICULTY = {
-  1: { depth: 1, skillLevel: 0, moveTime: 100 },
-  3: { depth: 3, skillLevel: 3, moveTime: 300 },
-  5: { depth: 8, skillLevel: 10, moveTime: 500 },
-  7: { depth: 12, skillLevel: 15, moveTime: 1000 },
-  10: { depth: 20, skillLevel: 20, moveTime: 2000 },
-};
-
 export class StockfishWorker {
+
   constructor() {
-    this.worker = null;
-    this._pending = new Map();
-    this._id = 0;
-    this._difficulty = DIFFICULTY[5];
+    this.engine = null;
   }
 
   async init() {
-    this.worker = new Worker('/js/ai/stockfish-worker.js');
-    this.worker.onmessage = (e) => this._handleMessage(e.data);
+    this.engine = new Worker('/stockfish.js');
+
     return new Promise((resolve, reject) => {
-      const id = this._nextId();
-      const t = setTimeout(() => reject(new Error('Stockfish init timeout')), 15000);
-      this._pending.set(id, {
-        resolve: () => { clearTimeout(t); resolve(); },
-        reject,
-      });
-      this.worker.postMessage({ type: 'init', id });
+      const timeout = setTimeout(() => {
+        reject(new Error('Stockfish init timed out'));
+      }, 10000);
+
+      this.engine.onmessage = (e) => {
+        const line = e.data;
+
+        if (line === 'uciok') {
+          this.engine.postMessage('isready');
+        }
+
+        if (line === 'readyok') {
+          clearTimeout(timeout);
+          this.engine.onmessage = null;
+          resolve();
+        }
+      };
+
+      this.engine.onerror = (e) => {
+        clearTimeout(timeout);
+        reject(e);
+      };
+
+      this.engine.postMessage('uci');
     });
   }
 
-  _nextId() {
-    return ++this._id;
-  }
-
-  _handleMessage(data) {
-    const pending = this._pending.get(data.id);
-    if (data.type === 'ready' && pending) {
-      this._pending.delete(data.id);
-      pending.resolve();
-    }
-    if (data.type === 'bestmove' && pending) {
-      this._pending.delete(data.id);
-      pending.resolve(data.move);
-    }
-    if (data.type === 'error' && pending) {
-      this._pending.delete(data.id);
-      pending.reject(new Error(data.message));
-    }
-  }
-
   setDifficulty(level) {
-    this._difficulty = DIFFICULTY[level] || DIFFICULTY[5];
+    const skill = Math.max(0, Math.min(20, level * 2));
+    this.engine.postMessage(`setoption name Skill Level value ${skill}`);
   }
 
-  getBestMove(fen, depth, time) {
-    const cfg = this._difficulty;
+  getBestMove(fen) {
     return new Promise((resolve, reject) => {
-      const id = this._nextId();
-      const t = setTimeout(() => reject(new Error('Move timeout')), 30000);
-      this._pending.set(id, {
-        resolve: (move) => { clearTimeout(t); resolve(move); },
-        reject,
-      });
-      this.worker.postMessage({
-        type: 'go',
-        id,
-        fen,
-        depth: depth ?? cfg.depth,
-        moveTime: time ?? cfg.moveTime,
-        skillLevel: cfg.skillLevel,
-      });
+      const timeout = setTimeout(() => {
+        this.engine.onmessage = null;
+        reject(new Error('Stockfish timed out'));
+      }, 15000);
+
+      this.engine.onmessage = (e) => {
+        const line = e.data;
+
+        if (typeof line === 'string' && line.startsWith('bestmove')) {
+          clearTimeout(timeout);
+          this.engine.onmessage = null;
+          resolve(line.split(' ')[1] || null);
+        }
+      };
+
+      this.engine.postMessage(`position fen ${fen}`);
+      this.engine.postMessage('go movetime 1000');
     });
   }
 
   destroy() {
-    this.worker?.terminate();
-    this._pending.clear();
+    if (this.engine) {
+      this.engine.terminate();
+      this.engine = null;
+    }
   }
 }

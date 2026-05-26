@@ -58,6 +58,14 @@ function initUI() {
   const boardEl = document.getElementById('board');
   if (!boardEl) return;
 
+
+  const username = sessionStorage.getItem('username');
+  const playerNameEl = document.getElementById('player-name');
+
+  if (playerNameEl && username) {
+  playerNameEl.textContent = username;
+ }
+
   myColor = stateManager.getState().color || (mode === 'ai' ? aiColor : null);
   board = new BoardRenderer(boardEl, { flipped: myColor === 'b', theme: 'classic' });
   board.render(chess.fen(), chess);
@@ -98,7 +106,11 @@ function initUI() {
   });
 }
 
+
 function submitMove(from, to, promotion) {
+  if (mode === 'ai' && aiGame?.thinking) {
+  return;
+}
   if (mode === 'ai' && aiGame) {
     if (needsPromotion(from, to)) {
       promotionModal.show(from, to, myColor);

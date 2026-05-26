@@ -23,6 +23,9 @@ export class AIGame {
   async start() {
     await this.stockfish.init();
     this.stockfish.setDifficulty(this.difficulty);
+    console.log('Player color:', this.playerColor);
+    console.log('AI color:', this.aiColor);
+    console.log('Current turn:', this.chess.turn());
     this._startClock();
     if (this.aiColor === 'w') await this.requestAIMove();
     this.onUpdate?.(this.getState());
@@ -45,7 +48,13 @@ export class AIGame {
   }
 
   makePlayerMove(from, to, promotion = 'q') {
-    if (this.thinking || this.chess.turn() !== this.playerColor) return { success: false };
+    if (this.thinking)
+   return { success: false };
+
+    if (this.chess.turn() !== this.playerColor) {
+    console.log('Not your turn');
+    return { success: false };
+   }
     try {
       const move = this.chess.move({ from, to, promotion });
       if (!move) return { success: false, reason: 'illegal' };

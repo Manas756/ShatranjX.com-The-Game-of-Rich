@@ -58,7 +58,12 @@ export class BoardRenderer {
 
   render(fen, chess) {
     const board = chess.board();
-    const order = this._rankFileOrder();
+    const order = [];
+    for (let rank = 8; rank >= 1; rank--) {
+    for (const file of FILES) {
+    order.push({ rank: String(rank), file });
+    }
+   }
     let idx = 0;
     for (const row of board) {
       for (const piece of row) {
@@ -132,7 +137,7 @@ export class BoardRenderer {
     });
   }
 
-  showCoordinates(show) {
+   setshowCoordinates(show) {
     this.showCoordinates = show;
   }
 

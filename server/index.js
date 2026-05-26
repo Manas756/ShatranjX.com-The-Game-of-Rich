@@ -39,9 +39,7 @@ app.get('/play', (req, res) => {
   res.render('index', { title: 'Chess Game (Legacy)' });
 });
 
-app.get('/leaderboard', (req, res) => {
-  res.render('pages/leaderboard', { title: 'Leaderboard — Shatranj.com' });
-});
+// Leaderboard removed
 
 const socketApi = initSocket(server, config, { gameManager, roomManager });
 
