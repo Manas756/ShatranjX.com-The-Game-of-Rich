@@ -33,7 +33,18 @@ export class DragDrop {
 
   _handleUp(e) {
     if (!this.draggedFrom) return;
-    const target = document.elementFromPoint(e.clientX || 0, e.clientY || 0) || e.target;
+
+    // ✅ Fix: touch events store coordinates in changedTouches, not e.clientX/Y
+    let clientX, clientY;
+    if (e.changedTouches && e.changedTouches.length > 0) {
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    const target = document.elementFromPoint(clientX, clientY) || e.target;
     const to = this._squareFromTarget(target);
     const from = this.draggedFrom;
     this.boardEl.querySelector('.dragging')?.classList.remove('dragging');
