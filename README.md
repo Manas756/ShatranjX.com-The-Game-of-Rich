@@ -1,5 +1,6 @@
 # ShatranjX.com
 
+🌐 **Live:** [shatranjx-com-master-the-game.onrender.com](https://shatranjx-com-master-the-game.onrender.com/)
 
 Production-oriented real-time chess platform (ShatranjX.com) with server-authoritative game logic, matchmaking, AI (Stockfish), and a premium dark UI.
 
